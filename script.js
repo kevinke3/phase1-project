@@ -1,66 +1,81 @@
-window.onload = async function () {
+const apiUrl = ('https://parallelum.com.br/fipe/api/v1/carros/marcas');
+
+// Fetch brands
+fetch('https://parallelum.com.br/fipe/api/v1/carros/marcas')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    // fetched data
+    console.log('Brands Data:', data);
+
+    // brand
     const brandSelect = document.getElementById('brandSelect');
-    const modelSelect = document.getElementById('modelSelect');
-    const yearSelect = document.getElementById('yearSelect');
-
-    // Fetch brands
-    const brandsResponse = await fetch('db.json');
-    const brandsData = await brandsResponse.json();
-    console.log('Brands Data:', brandsData);
-    brandsData.brands.forEach(brand => {
-        const option = document.createElement('option');
-        option.text = brand.name;
-        option.value = brand.coder;
-        brandSelect.appendChild(option);
-    });
-
-    // Fetch models for the selected brand
     brandSelect.addEventListener('change', async function () {
-        modelSelect.innerHTML = '';
-        yearSelect.innerHTML = '';
-        const selectedBrandCode = this.value;
-        const modelsResponse = await fetch('db.json');
-        const modelsData = await modelsResponse.json();
-        console.log('Models Data:', modelsData);
-        modelsData.models[selectedBrandCode].models.forEach(model => {
-            const option = document.createElement('option');
-            option.text = model.name;
-            option.value = model.coder;
-            modelSelect.appendChild(option);
-        });
-    });
+      const selectedBrandCode = this.value;
+      const modelsUrl = ('https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedBrandCode}/modelos');
 
-    // Fetch years for the selected model
-    modelSelect.addEventListener('change', async function () {
-        yearSelect.innerHTML = '';
-        const selectedBrandCode = brandSelect.value;
+      // Fetch models for the selected brand
+      const modelsResponse = await fetch('https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedBrandCode}/modelos');
+      const modelsData = await modelsResponse.json();
+      console.log('Models Data:', modelsData);
+
+      // Clear the existing options and add new options
+      const modelSelect = document.getElementById('modelSelect');
+      modelSelect.innerHTML = '';
+      modelsData.modelos.forEach(model => {
+          const option = document.createElement('option');
+          option.text = model.nome;
+          option.value = model.codigo;
+          modelSelect.appendChild(option);
+      });
+
+      //  modelSelect
+      modelSelect.addEventListener('change', async function () {
         const selectedModelCode = this.value;
-        const yearsResponse = await fetch('db.json');
+        const yearsUrl = ('https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedBrandCode}/modelos/${selectedModelCode}/anos');
+
+        //years for the selected model
+        const yearsResponse = await fetch('https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedBrandCode}/modelos/${selectedModelCode}/anos');
         const yearsData = await yearsResponse.json();
-        console.log('Years Data:', yearsData); // Log the fetched data
-        yearsData.years[selectedBrandCode].models[selectedModelCode].forEach(year => {
+        console.log('Years Data:', yearsData);
+
+        // Clearing the previous data
+        const yearSelect = document.getElementById('yearSelect');
+        yearSelect.innerHTML = '';
+        yearsData.forEach(year => {
             const option = document.createElement('option');
-            option.text = year.name;
-            option.value = year.coder;
+            option.text = year.nome;
+            option.value = year.codigo;
             yearSelect.appendChild(option);
         });
-    });
-};
 
-async function fetchVehicleDetails() {
-    const selectedBrandCode = document.getElementById('brandSelect').value;
-    const selectedModelCode = document.getElementById('modelSelect').value;
-    const selectedYearCode = document.getElementById('yearSelect').value;
-    const response = await fetch('db.json');
-    const vehicleDetailsData = await response.json();
-    console.log('Vehicle Details Data:', vehicleDetailsData); // Log the fetched data
-    const vehicleDetails = vehicleDetailsData.details[selectedBrandCode][selectedModelCode][selectedYearCode];
-    const detailsContainer = document.getElementById('vehicleDetails');
-    detailsContainer.innerHTML = `
-    <p><strong>Brand:</strong> ${vehicleDetails.Brand ? vehicleDetails.Brand : 'N/A'}</p>
-    <p><strong>Model:</strong> ${vehicleDetails.Model ? vehicleDetails.Model : 'N/A'}</p>
-    <p><strong>Model Year:</strong> ${vehicleDetails.YearModel ? vehicleDetails.YearModel : 'N/A'}</p>
-    <p><strong>Fuel:</strong> ${vehicleDetails.Fuel ? vehicleDetails.Fuel : 'N/A'}</p>
-    <p><strong>Value:</strong> ${vehicleDetails.Value ? vehicleDetails.Value : 'N/A'}</p>
+        // Add event listener to yearSelect
+        yearSelect.addEventListener('change', async function () {
+          const selectedYearCode = this.value;
+          const detailsUrl = ('https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedBrandCode}/modelos/${selectedModelCode}/anos/${selectedYearCode}');
+
+          //vehicle details for the selected year
+          const detailsResponse = await fetch('https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedBrandCode}/modelos/${selectedModelCode}/anos/${selectedYearCode}');
+          const vehicleDetailsData = await detailsResponse.json();
+          console.log('Vehicle Details Data:', vehicleDetailsData);
+
+          // vehicle details data
+          const detailsContainer = document.getElementById('vehicleDetails');
+          detailsContainer.innerHTML = `
+          <p><strong>Brand:</strong> ${vehicleDetailsData.marca ? vehicleDetailsData.marca : 'N/A'}</p>
+          <p><strong>Model:</strong> ${vehicleDetailsData.modelo ? vehicleDetailsData.modelo : 'N/A'}</p>
+          <p><strong>Model Year:</strong> ${vehicleDetailsData.ano_modelo ? vehicleDetailsData.ano_modelo : 'N/A'}</p>
+          <p><strong>Fuel:</strong> ${vehicleDetailsData.combustivel ? vehicleDetailsData.combustivel : 'N/A'}</p>
+          <p><strong>Value:</strong> ${vehicleDetailsData.Valor ? vehicleDetailsData.Valor : 'N/A'}</p>
 `;
-}
+        });
+      });
+    });
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
