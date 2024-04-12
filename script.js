@@ -6,7 +6,7 @@ window.onload = async function () {
     // Fetch brands
     const brandsResponse = await fetch('db.json');
     const brandsData = await brandsResponse.json();
-    console.log('Brands Data:', brandsData); // Log the fetched data
+    console.log('Brands Data:', brandsData);
     brandsData.brands.forEach(brand => {
         const option = document.createElement('option');
         option.text = brand.name;
@@ -21,7 +21,7 @@ window.onload = async function () {
         const selectedBrandCode = this.value;
         const modelsResponse = await fetch('db.json');
         const modelsData = await modelsResponse.json();
-        console.log('Models Data:', modelsData); // Log the fetched data
+        console.log('Models Data:', modelsData);
         modelsData.models[selectedBrandCode].models.forEach(model => {
             const option = document.createElement('option');
             option.text = model.name;
