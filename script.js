@@ -1,81 +1,73 @@
-const apiUrl = ('https://parallelum.com.br/fipe/api/v1/carros/marcas');
+document.addEventListener("DOMContentLoaded", () => {
+  fetchJsonData();
+});
 
-// Fetch brands
-fetch('https://parallelum.com.br/fipe/api/v1/carros/marcas')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    // fetched data
-    console.log('Brands Data:', data);
+let jsonData;
 
-    // brand
-    const brandSelect = document.getElementById('brandSelect');
-    brandSelect.addEventListener('change', async function () {
-      const selectedBrandCode = this.value;
-      const modelsUrl = ('https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedBrandCode}/modelos');
+async function fetchJsonData() {
+  try {
+    const response = await fetch('db.json');
+    jsonData = await response.json();
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
 
-      // Fetch models for the selected brand
-      const modelsResponse = await fetch('https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedBrandCode}/modelos');
-      const modelsData = await modelsResponse.json();
-      console.log('Models Data:', modelsData);
+function searchData() {
+  const brandCode = document.getElementById('brandCode').value;
+  const modelCode = document.getElementById('modelCode').value;
+  const yearCode = document.getElementById('yearCode').value;
 
-      // Clear the existing options and add new options
-      const modelSelect = document.getElementById('modelSelect');
-      modelSelect.innerHTML = '';
-      modelsData.modelos.forEach(model => {
-          const option = document.createElement('option');
-          option.text = model.nome;
-          option.value = model.codigo;
-          modelSelect.appendChild(option);
-      });
+  if (brandCode && modelCode && yearCode) {
+    displayValueForCodes(brandCode, modelCode, yearCode);
+  } else if (brandCode && modelCode) {
+    displayYearsForCodes(brandCode, modelCode);
+  } else if (brandCode) {
+    displayModelsForCode(brandCode);
+  } else {
+    alert('Please enter a brand code at least.');
+  }
+}
 
-      //  modelSelect
-      modelSelect.addEventListener('change', async function () {
-        const selectedModelCode = this.value;
-        const yearsUrl = ('https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedBrandCode}/modelos/${selectedModelCode}/anos');
+function displayModelsForCode(brandCode) {
+  const dataDiv = document.getElementById('data');
+  const models = jsonData.models[brandCode];
 
-        //years for the selected model
-        const yearsResponse = await fetch('https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedBrandCode}/modelos/${selectedModelCode}/anos');
-        const yearsData = await yearsResponse.json();
-        console.log('Years Data:', yearsData);
-
-        // Clearing the previous data
-        const yearSelect = document.getElementById('yearSelect');
-        yearSelect.innerHTML = '';
-        yearsData.forEach(year => {
-            const option = document.createElement('option');
-            option.text = year.nome;
-            option.value = year.codigo;
-            yearSelect.appendChild(option);
-        });
-
-        // Add event listener to yearSelect
-        yearSelect.addEventListener('change', async function () {
-          const selectedYearCode = this.value;
-          const detailsUrl = ('https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedBrandCode}/modelos/${selectedModelCode}/anos/${selectedYearCode}');
-
-          //vehicle details for the selected year
-          const detailsResponse = await fetch('https://parallelum.com.br/fipe/api/v1/carros/marcas/${selectedBrandCode}/modelos/${selectedModelCode}/anos/${selectedYearCode}');
-          const vehicleDetailsData = await detailsResponse.json();
-          console.log('Vehicle Details Data:', vehicleDetailsData);
-
-          // vehicle details data
-          const detailsContainer = document.getElementById('vehicleDetails');
-          detailsContainer.innerHTML = `
-          <p><strong>Brand:</strong> ${vehicleDetailsData.marca ? vehicleDetailsData.marca : 'N/A'}</p>
-          <p><strong>Model:</strong> ${vehicleDetailsData.modelo ? vehicleDetailsData.modelo : 'N/A'}</p>
-          <p><strong>Model Year:</strong> ${vehicleDetailsData.ano_modelo ? vehicleDetailsData.ano_modelo : 'N/A'}</p>
-          <p><strong>Fuel:</strong> ${vehicleDetailsData.combustivel ? vehicleDetailsData.combustivel : 'N/A'}</p>
-          <p><strong>Value:</strong> ${vehicleDetailsData.Valor ? vehicleDetailsData.Valor : 'N/A'}</p>
-`;
-        });
-      });
-    });
-  })
-  .catch(error => {
-    console.error('Error:', error);
+  dataDiv.innerHTML = '<h2>Models</h2>';
+  models.forEach(model => {
+    dataDiv.innerHTML += `<p>${model.code} - ${model.name}</p>`;
   });
+}
+
+function displayYearsForCodes(brandCode, modelCode) {
+  const dataDiv = document.getElementById('data');
+  const years = jsonData.years[modelCode];
+
+  dataDiv.innerHTML = '<h2>Years</h2>';
+  years.forEach(year => {
+    dataDiv.innerHTML += `<p>${year.code} - ${year.name}</p>`;
+  });
+}
+
+function displayValueForCodes(brandCode, modelCode, yearCode) {
+  const dataDiv = document.getElementById('data');
+
+  if (jsonData.prices && jsonData.prices[yearCode]) {
+    const value = jsonData.prices[yearCode];
+
+    dataDiv.innerHTML = '<h2>Value</h2>';
+    dataDiv.innerHTML += `
+          <p>TypeVeiculum: ${value.TypeVeiculum || 'N/A'}</p>
+          <p>Value: ${value.Value || 'N/A'}</p>
+          <p>Brand: ${value.Brand || 'N/A'}</p>
+          <p>Model: ${value.Model || 'N/A'}</p>
+          <p>YearModel: ${value.YearModel || 'N/A'}</p>
+          <p>Fuel: ${value.Fuel || 'N/A'}</p>
+          <p>CodeFipe: ${value.CodeFipe || 'N/A'}</p>
+          <p>MesReference: ${value.MesReference || 'N/A'}</p>
+          <p>FuelAcronym: ${value.FuelAcronym || 'N/A'}</p>
+      `;
+  } else {
+    dataDiv.innerHTML = '<p>Out of stock currently.</p>';
+  }
+}
