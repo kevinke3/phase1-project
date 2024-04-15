@@ -1,51 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manship Motors</title>
-    <link rel="stylesheet" href="./styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-            rel="stylesheet">
+    <title>Manship motors</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body background="Background.jpg">
+<body>
+    <body background="Background.jpg"></body>
     <header>
         <img src="logo.png" alt="Motors Logo">
         <h1>Manship Motors</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
     </header>
-    
-    <label for="brandSelect">Select Brand:</label>
-    <select id="brandSelect"></select>
-    <label for="modelSelect">Select Model:</label>
-    <select id="modelSelect"></select>
-    <label for="yearSelect">Select Year:</label>
-    <select id="yearSelect"></select>
-    <button onclick="fetchVehicleDetails()">Search</button>
-    <div id="vehicleDetails"></div>
+
+    <div>
+        <label for="brandCode">Brand Code:</label>
+        <input type="text" id="brandCode">
+        <button onclick="searchData()">Search</button>
+    </div>
+    <div>
+        <label for="modelCode">Model Code:</label>
+        <input type="text" id="modelCode">
+    </div>
+    <div>
+        <label for="yearCode">Year Code:</label>
+        <input type="text" id="yearCode">
+    </div>
+
+    <div id="data"></div>
 
     <script src="script.js"></script>
-
 </body>
-<footer>
-    <div class="footer1">
-        Reach us at<div class="social-media">
-            <a href="#" class="fa fa-facebook"></a>
-            <a href="#" class="fa fa-instagram"></a>
-            <a href="#" class="fa fa-youtube"></a>
-            <a href="#" class="fa fa-twitter"></a>
-            <a href="#" class="fa fa-snapchat"></a>
-            <a href="#" class="fa fa-google"></a>
-            <a href="#" class="fa fa-whatsapp"></a>
-        </div>
-    </div>
-    <p>&copy; 2024 Manship Motors. All rights reserved.</p>
-</footer>
-
 </html>
