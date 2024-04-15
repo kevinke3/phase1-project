@@ -27,7 +27,7 @@ body{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
-  #vehicleDetails p {
+  #vehicleDetails{
     margin-bottom: 10px;
   }
   
