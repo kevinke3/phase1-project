@@ -14,15 +14,13 @@ body{
     font-size: 4em;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     letter-spacing: 2px;
-    margin-top: 50px;
-    
+    margin-top: 50px;  
   }
   .img{
     display: block;
     margin: auto;
-
   }
-  
+
   #vehicleDetails {
     text-align: center;
     margin-top: 20px;
