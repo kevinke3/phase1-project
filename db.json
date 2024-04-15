@@ -1,104 +1,85 @@
 {
-    "brands": [
-      {
-        "coder": "1",
-        "name": "Acure"
-      },
-      {
-        "coder": "2",
-        "name": "Agral"
-      },
-      {
-        "coder": "3",
-        "name": "Alfa Romeo"
-      },
-      {
-        "coder": "4",
-        "name": "AM Gen"
-      },
-      {
-        "coder": "5",
-        "name": "Asia Motors"
-      }
-    ],
-    "models": {
-      "years": {
-        "32000-1": "32000 Petrol",
-        "32000-3": "32000 Diesel",
-        "2025-3": "2025 Diesel",
-        "2024-1": "2024 Gasoline",
-        "2024-3": "2024 Diesel"
-      },
-      "models": {
-        "5585": "AMAROK CD2.0 16V/S CD2.0 16V TDI 4x2 Die",
-        "5586": "AMAROK CD2.0 16V/S CD2.0 16V TDI 4x4 Die",
-        "9895": "AMAROK Comfor. 3.0 V6 TDI 4x4 Dies. Aut.",
-        "8531": "AMAROK Comfor. CD 2.0 TDI 4x4 Dies. Aut.",
-        "5748": "AMAROK CS2.0 16V/S2.0 16V TDI 4x2 Diesel"
-      }
+  "brands": [
+    {
+      "code": "1",
+      "name": "Acure"
     },
-    "years": [
+    {
+      "code": "2",
+      "name": "Agral"
+    },
+    {
+      "code": "3",
+      "name": "Alfa Romeo"
+    },
+    {
+      "code": "4",
+      "name": "AM Gen"
+    },
+    {
+      "code": "5",
+      "name": "Asia Motors"
+    }
+  ],
+  "models": {
+    "3": [
       {
-        "coder": "2022-3",
+        "code": 5585,
+        "name": "AMAROK CD2.0 16V/S CD2.0 16V TDI 4x2 Die"
+      },
+      {
+        "code": 5586,
+        "name": "AMAROK CD2.0 16V/S CD2.0 16V TDI 4x4 Die"
+      },
+      {
+        "code": 9895,
+        "name": "AMAROK Comfor. 3.0 V6 TDI 4x4 Dies. Aut."
+      },
+      {
+        "coder": 8531,
+        "name": "AMAROK Comfor. CD 2.0 TDI 4x4 Dies. Aut."
+      },
+      {
+        "coder": 5748,
+        "name": "AMAROK CS2.0 16V/S2.0 16V TDI 4x2 Diesel"
+      }
+    ]
+  },
+  "years": {
+    "5585": [
+      {
+        "code": "2022-3",
         "name": "2022 Diesel"
       },
       {
-        "coder": "2021-3",
+        "code": "2021-3",
         "name": "2021 Diesel"
       },
       {
-        "coder": "2020-3",
+        "code": "2020-3",
         "name": "2020 Diesel"
       },
       {
-        "coder": "2019-3",
+        "code": "2019-3",
         "name": "2019 Diesel"
       },
       {
-        "coder": "2018-3",
+        "code": "2018-3",
         "name": "2018 Diesel"
-      },
-      {
-        "coder": "2017-3",
-        "name": "2017 Diesel"
-      },
-      {
-        "coder": "2016-3",
-        "name": "2016 Diesel"
-      },
-      {
-        "coder": "2015-3",
-        "name": "2015 Diesel"
-      },
-      {
-        "coder": "2014-3",
-        "name": "2014 Diesel"
-      },
-      {
-        "coder": "2013-3",
-        "name": "2013 Diesel"
-      },
-      {
-        "coder": "2012-3",
-        "name": "2012 Diesel"
-      },
-      {
-        "coder": "2011-3",
-        "name": "2011 Diesel"
       }
-    ],
-    "details": {
-      "2022-3": {
-        "TypeVeiculum": 1,
-        "Value": "R$ 108.739,00",
-        "Brand": "VW - VolksWagen",
-        "Model": "AMAROK High.CD 2.0 16V TDI 4x4 Dies. Aut",
-        "YearModel": 2014,
-        "Fuel": "Diesel",
-        "CodeFipe": "005340-6",
-        "MesReference": "april 2024",
-        "AcronymFuel": "D"
-      }
+    ]
+  },
+  "prices": {
+    "2022-3": {
+      "TypeVeiculum": 1,
+      "Value": "R$ 108.739,00",
+      "Brand": "VW - VolksWagen",
+      "Model": "AMAROK High.CD 2.0 16V TDI 4x4 Dies. Aut",
+      "YearModel": 2014,
+      "Fuel": "Diesel",
+      "CodeFipe": "005340-6",
+      "MesReference": "april 2024",
+      "FuelAcronym": "D"
     }
   }
-  
+}
