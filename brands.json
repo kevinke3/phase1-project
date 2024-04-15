@@ -1,8 +1,8 @@
 [
-    { "coder": "1", "name": "Acure" },
-    { "coder": "2", "name": "Agral" },
-    { "coder": "3", "name": "Alfa Romeo" },
-    { "coder": "4", "name": "AM Gen" },
-    { "coder": "5", "name": "Asia Motors" }
+    { "code": "1", "name": "Acure" },
+    { "code": "2", "name": "Agral" },
+    { "code": "3", "name": "Alfa Romeo" },
+    { "code": "4", "name": "AM Gen" },
+    { "code": "5", "name": "Asia Motors" }
   ]
   
