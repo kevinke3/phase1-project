@@ -31,22 +31,31 @@ function searchData() {
 
 function displayModelsForCode(brandCode) {
   const dataDiv = document.getElementById('data');
-  const models = jsonData.models[brandCode];
+  const brandModels = jsonData.models.find(brand => brand.brand === brandCode);
 
-  dataDiv.innerHTML = '<h2>Models</h2>';
-  models.forEach(model => {
-    dataDiv.innerHTML += `<p>${model.code} - ${model.name}</p>`;
-  });
+  if (brandModels && brandModels.models) {
+    dataDiv.innerHTML = '<h2>Models</h2>';
+    brandModels.models.forEach(model => {
+      dataDiv.innerHTML += `<p>${model.code} - ${model.name}</p>`;
+    });
+  } else {
+    dataDiv.innerHTML = '<p>No models found for the given brand code.</p>';
+  }
 }
 
 function displayYearsForCodes(brandCode, modelCode) {
   const dataDiv = document.getElementById('data');
-  const years = jsonData.years[modelCode];
+  
+  if (jsonData.years[modelCode]) {
+    const years = jsonData.years[modelCode];
 
-  dataDiv.innerHTML = '<h2>Years</h2>';
-  years.forEach(year => {
-    dataDiv.innerHTML += `<p>${year.code} - ${year.name}</p>`;
-  });
+    dataDiv.innerHTML = '<h2>Years</h2>';
+    years.forEach(year => {
+      dataDiv.innerHTML += `<p>${year.code} - ${year.name}</p>`;
+    });
+  } else {
+    dataDiv.innerHTML = '<p>No years found for the given model code.</p>';
+  }
 }
 
 function displayValueForCodes(brandCode, modelCode, yearCode) {
